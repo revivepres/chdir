@@ -1,0 +1,37 @@
+@import "@material/button/mdc-button";
+@import "@material/checkbox/mdc-checkbox";
+@import "@material/elevation/mdc-elevation";
+@import "@material/list/mdc-list";
+@import "@material/layout-grid/mdc-layout-grid";
+@import "@material/textfield/mdc-text-field";
+@import "@material/textfield/icon/mdc-text-field-icon";
+@import "@material/ripple/mdc-ripple";
+@import "@material/typography/mdc-typography";
+@import "@material/top-app-bar/mdc-top-app-bar";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto';
+  margin: 0;
+  padding-top: 0.1px; // Prevent header h1 margin from pushing body down
+}
+
+.mdc-grid {
+  margin-top: 50px;
+  --mdc-layout-grid-margin-desktop: 32px;
+  --mdc-layout-grid-margin-tablet: 8px;
+  --mdc-layout-grid-margin-phone: 1px;
+}
+
+.mdc-grid-cell {
+  box-sizing: border-box;
+  padding: 8px;
+  font-size: 1.5em;
+}
+
+.mdc-grid.max-width {
+  max-width: 720px;
+}
