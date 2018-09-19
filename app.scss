@@ -3,11 +3,15 @@
 @import "@material/elevation/mdc-elevation";
 @import "@material/list/mdc-list";
 @import "@material/layout-grid/mdc-layout-grid";
+@import "@material/snackbar/mdc-snackbar";
 @import "@material/textfield/mdc-text-field";
 @import "@material/textfield/icon/mdc-text-field-icon";
 @import "@material/ripple/mdc-ripple";
 @import "@material/typography/mdc-typography";
 @import "@material/top-app-bar/mdc-top-app-bar";
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html, body {
   height: 100%;
@@ -17,6 +21,25 @@ body {
   font-family: 'Roboto';
   margin: 0;
   padding-top: 0.1px; // Prevent header h1 margin from pushing body down
+}
+
+header {
+  @include mdc-elevation(4);
+
+  display: block;
+  overflow: auto;
+}
+
+footer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  min-height: 50px;
 }
 
 .mdc-grid {

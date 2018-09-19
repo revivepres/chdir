@@ -71,3 +71,9 @@ typings/
 
 # Serverless directories
 .serverless
+
+# distribution
+.dist
+bundle.css
+bundle.js
+style-bundle.js

@@ -1,9 +1,25 @@
 import { MDCRipple } from '@material/ripple';
 import { MDCTextField } from '@material/textfield';
-
-var guestCount = 0;
+import { MDCSnackbar } from '@material/snackbar';
 
 $(document).ready(function () {
+  var guestCount = 0;
+
+  // Set Date
+  var now = new Date();
+  var day = ("0" + now.getDate()).slice(-2);
+  var month = ("0" + (now.getMonth() + 1)).slice(-2);
+  var today = now.getFullYear() + "-" + (month) + "-" + (day);
+  $("#selectedDate").val(today);
+
+  // Instantiate the MDC components
+  const btnSave = new MDCRipple(document.querySelector('.btnSave'));
+  const btnGuestdec = new MDCRipple(document.querySelector('.btnGuestdec'));
+  const btnGuestinc = new MDCRipple(document.querySelector('.btnGuestinc'));
+  const selectedDate = new MDCTextField(document.querySelector('.selectedDate'));
+  const snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
+
+  // Event Handlers
   $("#btnPageup").click(function (event) {
     event.preventDefault();
     $('html,body').animate({ scrollTop: $("#top").offset().top }, 'slow');
@@ -29,21 +45,25 @@ $(document).ready(function () {
 
   $("#btnSave").click(function (event) {
     event.preventDefault();
+
+    // Get selected users on list
+    var selected = [];
+    $(".mdc-checkbox input:checked").each(function () {
+      var id = $(this).attr("id").slice(3);
+      var name = $(this).closest('li').find('label').text();
+      selected.push({ id: id, name: name });
+    });
+
+    // Setup the object to save
+    var selectedDate = $("#selectedDate").val();
+    var total = guestCount + selected.length;
+    var attendance = { week: selectedDate, guests: guestCount, total: total, members: selected };
+  
     // TODO
+    console.log("SAVING: " + JSON.stringify(attendance));
+    const result = { message: `Saved ${total} attendees for ${selectedDate}`, timeout: 5000 };
+    snackbar.show(result);
   });
-
-  // Set Date
-  var now = new Date();
-  var day = ("0" + now.getDate()).slice(-2);
-  var month = ("0" + (now.getMonth() + 1)).slice(-2);
-  var today = now.getFullYear() + "-" + (month) + "-" + (day);
-  $("#selectedDate").val(today);
-
-  // Instantiate the MDC components
-  var btnSave = new MDCRipple(document.querySelector('.btnSave'));
-  var btnGuestdec = new MDCRipple(document.querySelector('.btnGuestdec'));
-  var btnGuestinc = new MDCRipple(document.querySelector('.btnGuestinc'));
-  var selectedDate = new MDCTextField(document.querySelector('.selectedDate'));
 
   // Load the data
   loadData();

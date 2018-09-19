@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "webpack-dev-server --progress"
+    "start": "webpack-dev-server --progress",
+    "build": "webpack -p"
   },
   "dependencies": {
     "@material/button": "^0.35.0",
@@ -11,6 +12,7 @@
     "@material/layout-grid": "^0.39.0",
     "@material/list": "^0.35.0",
     "@material/rtl": "^0.39.1",
+    "@material/snackbar": "^0.39.1",
     "@material/textfield": "^0.35.0",
     "@material/top-app-bar": "^0.39.3"
   },

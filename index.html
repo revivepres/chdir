@@ -5,9 +5,6 @@
   <meta charset="utf-8">
   <title>Church Directory</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="bundle.css">
 </head>
 
@@ -81,13 +78,18 @@
   </div>
 
   <hr>
-  <div id="bottom" class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--align-middle">
-        <span class="mdc-typography--overline">
-          Organization name
-        </span>
-      </div>
+  <footer id="bottom">
+    <a href="http://revivepres.church" target="_blank;" style="text-decoration: none;">
+      <span class="mdc-typography--overline">
+        Revive Presbyterian Church
+      </span>
+    </a>
+  </footer>
+
+  <div class="mdc-snackbar" aria-live="assertive" aria-atomic="true" aria-hidden="true">
+    <div class="mdc-snackbar__text"></div>
+    <div class="mdc-snackbar__action-wrapper">
+      <button type="button" class="mdc-snackbar__action-button"></button>
     </div>
   </div>
 
