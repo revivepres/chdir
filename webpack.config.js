@@ -31,11 +31,16 @@ module.exports = [
   {
     entry: "./app.js",
     output: {
-      filename: "bundle.js"
+      filename: "bundle.js",
+      libraryTarget: 'var',
+      library: 'ui'
     },
     module: {
       loaders: [{
         test: /\.js$/,
+        exclude: [
+          'Code.gs.js'
+        ],
         loader: 'babel-loader',
         query: {
           presets: ['env']

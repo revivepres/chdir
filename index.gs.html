@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Church Directory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?!= include('bundle.css'); ?>
+</head>
+
+<body>
+    <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+        <div id="progressbar" role="progressbar" class="mdc-linear-progress mdc-linear-progress--indeterminate">
+            <div class="mdc-linear-progress__buffering-dots"></div>
+            <div class="mdc-linear-progress__buffer"></div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+        </div>
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <span class="mdc-top-app-bar__title">Attendance</span>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                <a href="#" id="btnPagedown" class="material-icons mdc-top-app-bar__action-item ripple">file_download</a>
+                <a href="#" id="btnPageup" class="material-icons mdc-top-app-bar__action-item ripple">file_upload</a>
+            </section>
+        </div>
+    </header>
+
+    <div id="top" class="mdc-grid mdc-layout-grid max-width" disabled>
+        <div class="mdc-layout-grid__inner">
+            <div id="datefield" class="mdc-grid-cell 
+                    mdc-layout-grid__cell 
+                    mdc-layout-grid__cell--span-2-phone
+                    mdc-layout-grid__cell--span-4-tablet
+                    mdc-layout-grid__cell--span-6-desktop">
+                <div class="mdc-text-field data-mdc-auto-init='MDCTextField' mdc-text-field--outlined mdc-text-field--with-trailing-icon selectedDate">
+                    <input id="selectedDate" name="selectedDate" type="date" class="mdc-text-field__input">
+                    <label class="mdc-floating-label" for="attend-date">Date</label>
+                    <i class="material-icons mdc-text-field__icon" tabindex="0" role="button">event</i>
+                    <div class="mdc-line-ripple"></div>
+                    <div class="mdc-notched-outline">
+                        <svg>
+                            <path class="mdc-notched-outline__path" />
+                        </svg>
+                    </div>
+                    <div class="mdc-notched-outline__idle"></div>
+                </div>
+            </div>
+            <div id="savebutton" class="mdc-grid-cell 
+                    mdc-layout-grid--align-right
+                    mdc-layout-grid__cell 
+                    mdc-layout-grid__cell--span-2-phone
+                    mdc-layout-grid__cell--span-4-tablet
+                    mdc-layout-grid__cell--span-6-desktop
+                    mdc-layout-grid__cell--align-middle">
+                <button id="btnSave" class="mdc-button mdc-button--raised mdc-ripple-upgraded btnSave" onclick="save()">
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
+                    SAVE
+                </button>
+            </div>
+            <div class="mdc-grid-cell mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                <ul id="people" class="mdc-list demo-list">
+                    <li id="guest" class="mdc-list-item checkbox-list-ripple-surface">
+                        <span class="mdc-list-item__graphic" role="presentation">
+                            <i class="material-icons">person_outline</i>
+                        </span>
+                        <span class="mdc-list-item__text">
+                            <span class="mdc-list-item__primary-text">Guest</span>
+                            <span class="mdc-list-item__secondary-text">Count: <span id="guestCount">0</span></span>
+                        </span>
+                        <span class="mdc-list-item__meta">
+                            <button id="btnGuestdec" class="mdc-button mdc-button--outlined btnGuestdec">
+                                -1
+                            </button>
+                            <button id="btnGuestinc" class="mdc-button mdc-button--outlined btnGuestinc">
+                                +1
+                            </button>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <footer id="bottom">
+        <a href="http://revivepres.church" target="_blank;" style="text-decoration: none;">
+            <span class="mdc-typography--overline">
+                Revive Presbyterian Church
+            </span>
+        </a>
+    </footer>
+
+    <div class="mdc-snackbar" aria-live="assertive" aria-atomic="true" aria-hidden="true">
+        <div class="mdc-snackbar__text"></div>
+        <div class="mdc-snackbar__action-wrapper">
+            <button type="button" class="mdc-snackbar__action-button"></button>
+        </div>
+    </div>
+    <button onclick="test()">xxxx TEST xxxx</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <?!= include('bundle.js'); ?>
+    <script>
+        function save() {
+            // Get selected users on list
+            var selected = [];
+            $(".mdc-checkbox input:checked").each(function () {
+                var id = $(this).attr("id");//.slice(3);
+                var name = $(this).closest('li').find('label').text();
+                selected.push({ id: id, name: name });
+            });
+
+            // Setup the object to save
+            var total = ui.GuestCount.get() + selected.length;
+            var data = {
+                week: ui.SelectedDate.get(),
+                guests: ui.GuestCount.get(),
+                total: total,
+                members: selected
+            };
+
+            // Save
+            $("#progressbar").show();
+            $("#top :input").attr("disabled", true);
+            google.script.run
+                .withSuccessHandler(function (response) {
+                    $("#progressbar").hide();
+                    $("#top :input").attr("disabled", false);
+
+                    // Store to localstore if today
+                    if (ui.SelectedDate.today() == ui.SelectedDate.get()) {
+                        localStorage.setItem("chdir", JSON.stringify(data));
+                    }
+                    var msg = { message: response, timeout: 5000 }
+                    ui.SnackBar.show(msg);
+                })
+                .withFailureHandler(function (error) {
+                    var msg = { message: response, timeout: 5000 }
+                    ui.SnackBar.show(msg);
+                })
+                .save(data);
+        }  
+    </script>
+</body>
+
+</html>

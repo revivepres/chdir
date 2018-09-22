@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import "@material/button/mdc-button";
 @import "@material/checkbox/mdc-checkbox";
 @import "@material/elevation/mdc-elevation";
@@ -9,9 +12,7 @@
 @import "@material/ripple/mdc-ripple";
 @import "@material/typography/mdc-typography";
 @import "@material/top-app-bar/mdc-top-app-bar";
-@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "@material/linear-progress/mdc-linear-progress";
 
 html, body {
   height: 100%;
@@ -57,4 +58,48 @@ footer {
 
 .mdc-grid.max-width {
   max-width: 720px;
+}
+
+
+/*** Page loading placeholders ***/
+@keyframes placeholderShimmer{
+  0%{
+    background-position: -468px 0
+  }
+  100%{
+    background-position: 468px 0
+  }
+}
+
+.placeholderRow {
+  margin-bottom: 10px;
+}
+
+.placeholderCell {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  position: relative;
+}
+
+.placeholderTypeA {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.placeholderTypeB {
+  margin-left: 20px;
+  height: 100px;
+  width: 200px;
+}
+
+.placeholderTypeC {
+  height: 50px;
+  width: 50px;
 }

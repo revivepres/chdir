@@ -10,6 +10,16 @@
 
 <body>
   <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+    <div id="progressbar" role="progressbar" class="mdc-linear-progress mdc-linear-progress--indeterminate">
+      <div class="mdc-linear-progress__buffering-dots"></div>
+      <div class="mdc-linear-progress__buffer"></div>
+      <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+        <span class="mdc-linear-progress__bar-inner"></span>
+      </div>
+      <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+        <span class="mdc-linear-progress__bar-inner"></span>
+      </div>
+    </div>
     <div class="mdc-top-app-bar__row">
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <span class="mdc-top-app-bar__title">Attendance</span>
@@ -21,13 +31,13 @@
     </div>
   </header>
 
-  <div id="top" class="mdc-grid mdc-layout-grid max-width">
+  <div id="top" class="mdc-grid mdc-layout-grid max-width" disabled>
     <div class="mdc-layout-grid__inner">
-      <div class="mdc-grid-cell 
-                  mdc-layout-grid__cell 
-                  mdc-layout-grid__cell--span-2-phone
-                  mdc-layout-grid__cell--span-4-tablet
-                  mdc-layout-grid__cell--span-6-desktop">
+      <div id="datefield" class="mdc-grid-cell 
+                    mdc-layout-grid__cell 
+                    mdc-layout-grid__cell--span-2-phone
+                    mdc-layout-grid__cell--span-4-tablet
+                    mdc-layout-grid__cell--span-6-desktop">
         <div class="mdc-text-field data-mdc-auto-init='MDCTextField' mdc-text-field--outlined mdc-text-field--with-trailing-icon selectedDate">
           <input id="selectedDate" name="selectedDate" type="date" class="mdc-text-field__input">
           <label class="mdc-floating-label" for="attend-date">Date</label>
@@ -41,21 +51,21 @@
           <div class="mdc-notched-outline__idle"></div>
         </div>
       </div>
-      <div class="mdc-grid-cell 
-                  mdc-layout-grid--align-right
-                  mdc-layout-grid__cell 
-                  mdc-layout-grid__cell--span-2-phone
-                  mdc-layout-grid__cell--span-4-tablet
-                  mdc-layout-grid__cell--span-6-desktop
-                  mdc-layout-grid__cell--align-middle">
+      <div id="savebutton" class="mdc-grid-cell 
+                    mdc-layout-grid--align-right
+                    mdc-layout-grid__cell 
+                    mdc-layout-grid__cell--span-2-phone
+                    mdc-layout-grid__cell--span-4-tablet
+                    mdc-layout-grid__cell--span-6-desktop
+                    mdc-layout-grid__cell--align-middle">
         <button id="btnSave" class="mdc-button mdc-button--raised mdc-ripple-upgraded btnSave">
           <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
           SAVE
         </button>
       </div>
       <div class="mdc-grid-cell mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <ul id="listPeople" class="mdc-list demo-list">
-          <li class="mdc-list-item checkbox-list-ripple-surface">
+        <ul id="people" class="mdc-list demo-list">
+          <li id="guest" class="mdc-list-item checkbox-list-ripple-surface">
             <span class="mdc-list-item__graphic" role="presentation">
               <i class="material-icons">person_outline</i>
             </span>
