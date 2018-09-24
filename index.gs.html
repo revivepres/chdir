@@ -102,21 +102,27 @@
             <button type="button" class="mdc-snackbar__action-button"></button>
         </div>
     </div>
-    <button onclick="test()">xxxx TEST xxxx</button>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <?!= include('bundle.js'); ?>
     <script>
+        window.onload = function () {
+            ui.Page.loading();
+            google.script.run
+                .withSuccessHandler(function (data) {
+                    ui.Page.show(data);
+                })
+                .withFailureHandler(function (error) {
+                    var msg = { message: response, timeout: 5000 }
+                    ui.SnackBar.show(msg);
+                })
+                .load();
+        }
+        
         function save() {
-            // Get selected users on list
-            var selected = [];
-            $(".mdc-checkbox input:checked").each(function () {
-                var id = $(this).attr("id");//.slice(3);
-                var name = $(this).closest('li').find('label').text();
-                selected.push({ id: id, name: name });
-            });
-
             // Setup the object to save
+            var selected = ui.GetSelected();
             var total = ui.GuestCount.get() + selected.length;
             var data = {
                 week: ui.SelectedDate.get(),
@@ -126,17 +132,16 @@
             };
 
             // Save
-            $("#progressbar").show();
-            $("#top :input").attr("disabled", true);
+            ui.Page.lock();
             google.script.run
                 .withSuccessHandler(function (response) {
-                    $("#progressbar").hide();
-                    $("#top :input").attr("disabled", false);
+                    ui.Page.unlock();
 
                     // Store to localstore if today
                     if (ui.SelectedDate.today() == ui.SelectedDate.get()) {
                         localStorage.setItem("chdir", JSON.stringify(data));
                     }
+
                     var msg = { message: response, timeout: 5000 }
                     ui.SnackBar.show(msg);
                 })
